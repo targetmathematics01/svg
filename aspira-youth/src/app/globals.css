@@ -1,0 +1,60 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-primary: #fe5d37;
+  --color-secondary: #ffc107;
+  --color-tertiary: #198754;
+  --color-accent: #0dcaf0;
+  --color-dark: #103741;
+  --color-light: #f5f5f5;
+  
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-heading: "Fredoka One", "Nunito", sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #103741;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-dark);
+    font-weight: 700;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[var(--color-primary)] text-white px-6 py-3 rounded-full font-bold hover:bg-[#e04b2a] transition-colors duration-300 shadow-md hover:shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply bg-[var(--color-secondary)] text-[#103741] px-6 py-3 rounded-full font-bold hover:bg-[#e0a800] transition-colors duration-300 shadow-md hover:shadow-lg;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+  
+  .container-custom {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  .blog-content img,
+  .ql-editor img {
+    @apply my-6 h-auto max-w-full rounded-xl;
+  }
+
+  .blog-content figure {
+    @apply my-6;
+  }
+}
