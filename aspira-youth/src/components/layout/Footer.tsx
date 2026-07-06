@@ -1,13 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
     <footer className="bg-[var(--color-dark)] text-white pt-16 pb-8">
       <div className="container-custom grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
         <div className="space-y-4">
-          <h3 className="text-2xl font-heading text-white">
-            Aspira<span className="text-[var(--color-secondary)]">Youth</span>
-          </h3>
+          <div className="flex items-center gap-3">
+            <Image src="/favicon.png" alt="Aspira Youth Logo" width={36} height={36} className="object-contain" />
+            <h3 className="text-2xl font-heading text-white m-0">
+              Aspira<span className="text-[var(--color-secondary)]">Youth</span>
+            </h3>
+          </div>
           <p className="text-gray-400 text-sm">
             Empowering vulnerable youth through free education and community support.
           </p>

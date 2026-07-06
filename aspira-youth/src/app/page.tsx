@@ -10,7 +10,8 @@ export default function Home() {
         <div className="container-custom relative z-10">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="w-full md:w-1/2 space-y-6">
-              <h1 className="text-5xl md:text-6xl text-[var(--color-primary)] mb-4">
+              <h1 className="text-5xl md:text-6xl text-[var(--color-primary)] mb-4 flex items-center gap-4">
+                <Image src="/favicon.png" alt="Aspira Youth Logo" width={56} height={56} className="object-contain" />
                 Aspira Youth
               </h1>
               <h2 className="text-3xl md:text-4xl text-[var(--color-dark)]">
