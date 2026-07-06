@@ -194,6 +194,23 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Partners Section */}
+      <section className="section-padding bg-[var(--color-light)]">
+        <div className="container-custom text-center">
+          <h2 className="text-3xl md:text-4xl text-[var(--color-primary)] mb-8 font-semibold">Supported By</h2>
+          <div className="flex justify-center items-center">
+            <div className="relative w-64 h-32 md:w-80 md:h-40 grayscale hover:grayscale-0 transition-all duration-300">
+              <Image 
+                src="/savechildren.png" 
+                alt="Save the Children" 
+                fill 
+                className="object-contain" 
+              />
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
