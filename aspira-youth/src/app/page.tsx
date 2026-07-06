@@ -196,19 +196,26 @@ export default function Home() {
       </section>
 
       {/* Partners Section */}
-      <section className="section-padding bg-[var(--color-light)]">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl text-[var(--color-primary)] mb-8 font-semibold">Supported By</h2>
-          <div className="flex justify-center items-center">
-            <div className="relative w-64 h-32 md:w-80 md:h-40 grayscale hover:grayscale-0 transition-all duration-300">
-              <Image 
-                src="/savechildren.png" 
-                alt="Save the Children" 
-                fill 
-                className="object-contain" 
-              />
-            </div>
-          </div>
+      <section className="relative min-h-[400px] flex flex-col items-center justify-center text-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/savechildren.png" 
+            alt="Supported by Save the Children" 
+            fill 
+            className="object-cover object-center" 
+            quality={100}
+          />
+          {/* Dark Overlay for Text Readability */}
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+
+        {/* Content Overlay */}
+        <div className="container-custom relative z-10 px-4 py-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-md">Supported By</h2>
+          <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto font-medium drop-shadow-md">
+            Save the Children
+          </p>
         </div>
       </section>
     </div>
