@@ -195,13 +195,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Partners Section */}
+      {/* Save the Children Section */}
       <section className="relative min-h-[400px] flex flex-col items-center justify-center text-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image 
             src="/savechildren.png" 
-            alt="Supported by Save the Children" 
+            alt="Children smiling and learning together" 
             fill 
             className="object-cover object-center grayscale" 
             quality={100}
@@ -212,9 +212,9 @@ export default function Home() {
 
         {/* Content Overlay */}
         <div className="container-custom relative z-10 px-4 py-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-md">Supported By</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-md">Every Child Deserves a Future</h2>
           <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto font-medium drop-shadow-md">
-            Save the Children
+            Empowering the next generation with the tools and opportunities they need to thrive.
           </p>
         </div>
       </section>
