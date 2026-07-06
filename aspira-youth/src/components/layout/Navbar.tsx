@@ -38,7 +38,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           
           {/* Auth Section */}
-          <div className="flex items-center border-l pl-4 ml-2">
+          <div className="hidden md:flex items-center border-l pl-4 ml-2">
             {!loading && (
               user ? (
                 <div className="flex items-center gap-3">
@@ -86,6 +86,34 @@ export default function Navbar() {
             <Link href="/activities" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/activities") ? "text-[var(--color-primary)]" : ""}`}>Activities</Link>
             <Link href="/forum" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/forum") ? "text-[var(--color-primary)]" : ""}`}>Forum</Link>
             <Link href="/team" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/team") ? "text-[var(--color-primary)]" : ""}`}>Our Team</Link>
+            
+            {/* Mobile Auth Section */}
+            <div className="border-t border-gray-100 pt-4 mt-2">
+              {!loading && (
+                user ? (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      {user.photoURL ? (
+                        <img src={user.photoURL} alt={user.displayName || "User"} className="w-10 h-10 rounded-full border border-gray-200" />
+                      ) : (
+                        <UserCircle className="w-10 h-10 text-gray-400" />
+                      )}
+                      <span className="text-base font-semibold text-gray-700">{user.displayName}</span>
+                    </div>
+                    <button onClick={logout} className="text-gray-400 hover:text-red-500 transition-colors p-2" title="Log out">
+                      <LogOut className="w-6 h-6" />
+                    </button>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={signInWithGoogle}
+                    className="w-full bg-white border border-gray-300 text-gray-700 px-4 py-3 rounded-lg text-base font-bold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <UserCircle className="w-5 h-5" /> Sign In
+                  </button>
+                )
+              )}
+            </div>
           </nav>
         </div>
       )}
