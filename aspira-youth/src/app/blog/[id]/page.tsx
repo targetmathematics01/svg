@@ -2,8 +2,8 @@
 
 import { useState, useEffect, use } from 'react';
 import { db } from '@/lib/firebase';
-import { doc, getDoc, collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, increment, updateDoc, deleteDoc } from 'firebase/firestore';
-import { ArrowLeft, Calendar, User, MessageSquare, Trash2 } from 'lucide-react';
+import { doc, getDoc, collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, increment, updateDoc, deleteDoc, getDocs, limit, startAfter, endBefore, limitToLast } from 'firebase/firestore';
+import { ArrowLeft, ArrowRight, Calendar, User, MessageSquare, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { useAuth } from '@/context/AuthContext';
@@ -42,6 +42,8 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
   const [loading, setLoading] = useState(true);
   const [newComment, setNewComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [prevPost, setPrevPost] = useState<{id: string, title: string} | null>(null);
+  const [nextPost, setNextPost] = useState<{id: string, title: string} | null>(null);
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -51,6 +53,28 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
         
         if (docSnap.exists()) {
           setBlog({ id: docSnap.id, ...(docSnap.data() as Omit<BlogPost, 'id'>) });
+          
+          try {
+            // Older post (next in desc order)
+            const prevQ = query(collection(db, "blogs"), orderBy("createdAt", "desc"), startAfter(docSnap), limit(1));
+            const prevSnap = await getDocs(prevQ);
+            if (!prevSnap.empty) {
+              setPrevPost({ id: prevSnap.docs[0].id, title: prevSnap.docs[0].data().title || 'Previous Post' });
+            } else {
+              setPrevPost(null);
+            }
+          } catch (e) { console.error("Error fetching prev post", e); }
+
+          try {
+            // Newer post (previous in desc order)
+            const nextQ = query(collection(db, "blogs"), orderBy("createdAt", "desc"), endBefore(docSnap), limitToLast(1));
+            const nextSnap = await getDocs(nextQ);
+            if (!nextSnap.empty) {
+              setNextPost({ id: nextSnap.docs[0].id, title: nextSnap.docs[0].data().title || 'Next Post' });
+            } else {
+              setNextPost(null);
+            }
+          } catch (e) { console.error("Error fetching next post", e); }
         } else {
           setBlog(null);
         }
@@ -213,6 +237,25 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
             </div>
           </div>
         </div>
+
+        {/* Post Navigation */}
+        {(prevPost || nextPost) && (
+          <div className="flex flex-col sm:flex-row justify-between items-stretch gap-4 mb-12">
+            {prevPost ? (
+              <Link href={`/blog/${prevPost.id}`} className="flex-1 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-all hover:border-[var(--color-primary)] group flex flex-col items-start text-left">
+                <span className="text-sm text-gray-500 font-medium mb-2 flex items-center gap-2 group-hover:text-[var(--color-primary)] transition-colors"><ArrowLeft className="w-4 h-4" /> Previous Post</span>
+                <span className="text-lg font-bold text-gray-900 line-clamp-2">{prevPost.title}</span>
+              </Link>
+            ) : <div className="flex-1"></div>}
+            
+            {nextPost ? (
+              <Link href={`/blog/${nextPost.id}`} className="flex-1 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-all hover:border-[var(--color-primary)] group flex flex-col items-end text-right">
+                <span className="text-sm text-gray-500 font-medium mb-2 flex items-center gap-2 group-hover:text-[var(--color-primary)] transition-colors">Next Post <ArrowRight className="w-4 h-4" /></span>
+                <span className="text-lg font-bold text-gray-900 line-clamp-2">{nextPost.title}</span>
+              </Link>
+            ) : <div className="flex-1"></div>}
+          </div>
+        )}
 
         {/* Comments Section */}
         <div className="mb-12">
