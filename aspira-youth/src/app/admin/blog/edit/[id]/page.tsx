@@ -26,7 +26,7 @@ const ReactQuill = dynamic(
     const { default: RQ, Quill } = await import('react-quill-new');
     
     // Allow blob: URLs for instant pending image previews
-    const Image = Quill.import('formats/image');
+    const Image = Quill.import('formats/image') as any;
     Image.sanitize = function(url: string) {
       if (/^https?:\/\//.test(url) || /^data:image\//.test(url) || /^blob:http/.test(url)) {
         return url;
