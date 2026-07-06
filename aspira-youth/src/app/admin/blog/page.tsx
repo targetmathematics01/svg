@@ -50,9 +50,9 @@ export default function AdminBlogPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-blue-100 text-blue-500 rounded-xl flex items-center justify-center">
+          <div className="w-12 h-12 bg-blue-100 text-blue-500 rounded-xl flex items-center justify-center shrink-0">
             <FileText className="w-6 h-6" />
           </div>
           <div>
@@ -89,25 +89,25 @@ export default function AdminBlogPage() {
         ) : (
           <div className="divide-y divide-gray-100">
             {blogs.map((blog) => (
-              <div key={blog.id} className="p-6 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                <div className="flex gap-4 items-center">
+              <div key={blog.id} className="p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
+                <div className="flex gap-4 items-center w-full sm:w-auto">
                   {blog.coverImage ? (
-                    <img src={blog.coverImage} alt={blog.title || 'Blog cover'} className="w-24 h-16 object-cover rounded-lg" />
+                    <img src={blog.coverImage} alt={blog.title || 'Blog cover'} className="w-24 h-16 object-cover rounded-lg shrink-0" />
                   ) : (
-                    <div className="w-24 h-16 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
+                    <div className="w-24 h-16 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 shrink-0">
                       <ImageIcon className="w-6 h-6" />
                     </div>
                   )}
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-lg mb-1">{blog.title}</h4>
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
-                      <span>{blog.author}</span>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-gray-900 text-lg mb-1 truncate">{blog.title}</h4>
+                    <div className="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
+                      <span className="truncate">{blog.author}</span>
                       <span>•</span>
-                      <span>{blog.createdAt ? format(blog.createdAt.toDate(), 'MMM d, yyyy') : 'Draft'}</span>
+                      <span className="whitespace-nowrap">{blog.createdAt ? format(blog.createdAt.toDate(), 'MMM d, yyyy') : 'Draft'}</span>
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 w-full sm:w-auto justify-end border-t sm:border-t-0 pt-4 sm:pt-0 border-gray-100 mt-2 sm:mt-0">
                   <Link 
                     href={`/blog/${blog.id}`}
                     target="_blank"

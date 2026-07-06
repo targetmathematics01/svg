@@ -1,14 +1,20 @@
 "use client";
 
 import { useAuth } from '@/context/AuthContext';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useEffect } from 'react';
-import { LayoutDashboard, FileText, Image as ImageIcon, Users, LogOut, ArrowLeft } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { LayoutDashboard, FileText, Image as ImageIcon, Users, LogOut, ArrowLeft, Menu, X } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, isAdmin, loading, logout } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (!loading && !isAdmin) {
@@ -33,10 +39,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
+      {/* Mobile Header */}
+      <div className="md:hidden bg-white border-b border-gray-200 p-4 flex items-center justify-between sticky top-0 z-20">
+        <h2 className="text-xl font-bold text-[var(--color-primary)]">Admin Panel</h2>
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-gray-600">
+          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {/* Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 bg-black/50 z-20 md:hidden" onClick={() => setIsMobileMenuOpen(false)} />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-10">
-        <div className="p-6 border-b border-gray-200">
+      <aside className={`w-64 bg-white border-r border-gray-200 flex flex-col fixed md:sticky top-0 h-screen z-30 transition-transform transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+        <div className="p-6 border-b border-gray-200 hidden md:block">
           <h2 className="text-xl font-bold text-[var(--color-primary)]">Admin Panel</h2>
         </div>
         
@@ -69,7 +88,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 p-8">
+      <main className="flex-1 p-4 md:p-8 w-full overflow-hidden">
         <div className="max-w-5xl mx-auto">
           {children}
         </div>

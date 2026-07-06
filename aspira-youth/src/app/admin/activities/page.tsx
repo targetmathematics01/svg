@@ -248,7 +248,7 @@ export default function ManageActivitiesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {albums.map((album) => (
               <div key={album.id} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex flex-col sm:flex-row items-start sm:justify-between gap-4 mb-4">
                   <div className="flex gap-4 items-center">
                     <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0 relative">
                       <img src={getImageUrl(album.coverImage)} alt={album.title} className="absolute inset-0 w-full h-full object-cover" />
@@ -269,7 +269,7 @@ export default function ManageActivitiesPage() {
 
                 {/* Add Image to Album */}
                 {selectedAlbumId === album.id ? (
-                  <form onSubmit={(e) => handleAddImageToAlbum(e, album.id)} className="mt-4 flex gap-2">
+                  <form onSubmit={(e) => handleAddImageToAlbum(e, album.id)} className="mt-4 flex flex-col sm:flex-row gap-2">
                     <input 
                       type="url" 
                       required
@@ -282,14 +282,14 @@ export default function ManageActivitiesPage() {
                     <button 
                       type="submit" 
                       disabled={isAddingImage}
-                      className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 disabled:opacity-50"
+                      className="w-full sm:w-auto bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 disabled:opacity-50"
                     >
                       Add
                     </button>
                     <button 
                       type="button" 
                       onClick={() => { setSelectedAlbumId(null); setNewImageUrl(''); }}
-                      className="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200"
+                      className="w-full sm:w-auto bg-gray-100 text-gray-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200"
                     >
                       Cancel
                     </button>

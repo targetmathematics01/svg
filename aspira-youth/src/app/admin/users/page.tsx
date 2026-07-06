@@ -87,8 +87,8 @@ export default function ManageAdminsPage() {
           <UserPlus className="w-5 h-5 text-[var(--color-primary)]" />
           Add New Admin
         </h3>
-        <form onSubmit={handleAddAdmin} className="flex gap-4 items-end">
-          <div className="flex-1">
+        <form onSubmit={handleAddAdmin} className="flex flex-col sm:flex-row gap-4 sm:items-end">
+          <div className="flex-1 w-full">
             <label className="block text-sm font-medium text-gray-700 mb-1">Gmail Address</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -107,7 +107,7 @@ export default function ManageAdminsPage() {
           <button
             type="submit"
             disabled={isSubmitting || !newAdminEmail.trim()}
-            className="bg-[var(--color-dark)] text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 h-[46px]"
+            className="w-full sm:w-auto bg-[var(--color-dark)] text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 h-[46px]"
           >
             {isSubmitting ? 'Adding...' : 'Add Admin'}
           </button>

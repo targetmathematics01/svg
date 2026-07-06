@@ -62,17 +62,17 @@ export default function AdminTeamPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Manage Team</h1>
           <p className="text-gray-500 text-sm mt-1">Add, edit, or remove team members.</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           {members.length === 0 && (
             <button 
               onClick={handleSeed}
               disabled={isSeeding}
-              className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-xl transition-colors font-medium"
+              className="flex items-center justify-center w-full sm:w-auto gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-xl transition-colors font-medium"
             >
               <RefreshCw className={`w-5 h-5 ${isSeeding ? 'animate-spin' : ''}`} />
               {isSeeding ? 'Seeding...' : 'Seed Initial Data'}
@@ -80,7 +80,7 @@ export default function AdminTeamPage() {
           )}
           <Link 
             href="/admin/team/new" 
-            className="flex items-center gap-2 bg-[var(--color-primary)] hover:bg-orange-600 text-white px-4 py-2 rounded-xl transition-colors font-medium shadow-sm"
+            className="flex items-center justify-center w-full sm:w-auto gap-2 bg-[var(--color-primary)] hover:bg-orange-600 text-white px-4 py-2 rounded-xl transition-colors font-medium shadow-sm"
           >
             <Plus className="w-5 h-5" />
             Add Member
