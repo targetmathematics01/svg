@@ -36,7 +36,7 @@ export default function Footer() {
         <div>
           <h4 className="text-lg font-bold mb-4 text-[var(--color-tertiary)]">Contact Us</h4>
           <p className="text-gray-300 text-sm">
-            info@aspirayouth.org <br/>
+            aspirayouthteam@gmail.com <br/>
             Yangon, Myanmar
           </p>
         </div>
