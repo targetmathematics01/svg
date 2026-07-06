@@ -64,33 +64,35 @@ const AlbumCarousel = ({ album }: { album: Album }) => {
       
       <div className="w-full">
         {/* Main Carousel View */}
-        <div className="relative aspect-video bg-black/5 rounded-2xl overflow-hidden flex items-center justify-center group shadow-sm border border-gray-100">
-          <style>{`
-            @keyframes smoothFade {
-              from { opacity: 0; }
-              to { opacity: 1; }
-            }
-          `}</style>
-          <img 
-            key={currentIndex}
-            src={getImageUrl(images[currentIndex])} 
-            alt={`${album.title} photo ${currentIndex + 1}`} 
-            className="absolute inset-0 w-full h-full object-contain"
-            style={{ animation: 'smoothFade 0.6s ease-in-out' }}
-          />
+        <div className="relative aspect-video bg-black/5 rounded-2xl overflow-hidden group shadow-sm border border-gray-100">
+          {/* Sliding Track */}
+          <div 
+            className="flex w-full h-full transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {images.map((img, idx) => (
+              <div key={idx} className="w-full h-full flex-shrink-0 relative flex items-center justify-center">
+                <img 
+                  src={getImageUrl(img)} 
+                  alt={`${album.title} photo ${idx + 1}`} 
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            ))}
+          </div>
           
           {/* Navigation Arrows */}
           {images.length > 1 && (
             <>
               <button 
                 onClick={prevImage}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 hover:bg-white text-gray-800 rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 hover:bg-white text-gray-800 rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-10"
               >
                 <ChevronLeft className="w-6 h-6" />
               </button>
               <button 
                 onClick={nextImage}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 hover:bg-white text-gray-800 rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 hover:bg-white text-gray-800 rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-10"
               >
                 <ChevronRight className="w-6 h-6" />
               </button>
@@ -98,7 +100,7 @@ const AlbumCarousel = ({ album }: { album: Album }) => {
           )}
           
           {/* Image Counter */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm z-10">
             {currentIndex + 1} / {images.length}
           </div>
         </div>
