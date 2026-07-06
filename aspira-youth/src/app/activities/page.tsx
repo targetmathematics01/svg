@@ -67,7 +67,7 @@ const AlbumCarousel = ({ album }: { album: Album }) => {
         <div className="relative aspect-video bg-black/5 rounded-2xl overflow-hidden group shadow-sm border border-gray-100">
           {/* Sliding Track */}
           <div 
-            className="flex w-full h-full transition-transform duration-500 ease-in-out"
+            className="flex w-full h-full transition-transform duration-1000 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
             {images.map((img, idx) => (
