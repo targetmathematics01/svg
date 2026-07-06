@@ -24,7 +24,7 @@ export default function Navbar() {
         <nav className="hidden md:flex items-center gap-6 font-bold text-[var(--color-dark)]">
           <Link href="/" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/") ? "text-[var(--color-primary)]" : ""}`}>Home</Link>
           <Link href="/blog" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/blog") ? "text-[var(--color-primary)]" : ""}`}>Blog</Link>
-          <Link href="/resources" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/resources") ? "text-[var(--color-primary)]" : ""}`}>Resources</Link>
+
           <Link href="/activities" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/activities") ? "text-[var(--color-primary)]" : ""}`}>Activities</Link>
           <Link href="/forum" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/forum") ? "text-[var(--color-primary)]" : ""}`}>Forum</Link>
           <Link href="/team" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/team") ? "text-[var(--color-primary)]" : ""}`}>Our Team</Link>

@@ -80,5 +80,11 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth.uid == userId;
     }
+
+    // Team Members
+    match /teamMembers/{memberId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
   }
 }

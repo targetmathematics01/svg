@@ -1,22 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { teamMembers } from "@/data/team";
+import { db } from '@/lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import { ArrowLeft, Mail, Briefcase, GraduationCap, Award } from "lucide-react";
+import { TeamMember } from "@/types/team";
 
-export function generateStaticParams() {
-  return teamMembers.map((member) => ({
-    id: member.id,
-  }));
-}
+export const revalidate = 60; // Revalidate every 60 seconds
 
 export default async function TeamMemberProfile(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
-  const member = teamMembers.find((m) => m.id === params.id);
+  
+  const docRef = doc(db, 'teamMembers', params.id);
+  const docSnap = await getDoc(docRef);
 
-  if (!member) {
+  if (!docSnap.exists()) {
     notFound();
   }
+
+  const member = { id: docSnap.id, ...docSnap.data() } as TeamMember;
 
   return (
     <div className="bg-[var(--color-light)] min-h-screen pb-16">
@@ -33,13 +35,17 @@ export default async function TeamMemberProfile(props: { params: Promise<{ id: s
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
           {/* Header Profile Section */}
           <div className="p-6 md:p-8 flex flex-col md:flex-row gap-8 items-start md:items-end border-b border-gray-100">
-            <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-lg shrink-0 bg-white">
-              <Image 
-                src={member.image} 
-                alt={member.name}
-                fill
-                className="object-cover"
-              />
+            <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-lg shrink-0 bg-gray-100 flex items-center justify-center">
+              {member.image ? (
+                <Image 
+                  src={member.image} 
+                  alt={member.name}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <span className="text-gray-400">No Image</span>
+              )}
             </div>
             <div className="flex-grow space-y-2 pb-2">
               <h1 className="text-3xl md:text-4xl font-heading text-[var(--color-dark)]">{member.name}</h1>
@@ -88,28 +94,32 @@ export default async function TeamMemberProfile(props: { params: Promise<{ id: s
             {/* Sidebar (Right) */}
             <div className="col-span-1 p-6 md:p-8 space-y-8 bg-gray-50/50">
               {/* Skills */}
-              <section>
-                <h2 className="text-xl font-bold mb-4 text-[var(--color-dark)]">Top Skills</h2>
-                <div className="flex flex-wrap gap-2">
-                  {member.skills.map((skill) => (
-                    <span key={skill} className="bg-white border border-gray-200 text-gray-700 px-3 py-1.5 rounded-md text-sm font-medium shadow-sm">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </section>
+              {member.skills && member.skills.length > 0 && (
+                <section>
+                  <h2 className="text-xl font-bold mb-4 text-[var(--color-dark)]">Top Skills</h2>
+                  <div className="flex flex-wrap gap-2">
+                    {member.skills.map((skill) => (
+                      <span key={skill} className="bg-white border border-gray-200 text-gray-700 px-3 py-1.5 rounded-md text-sm font-medium shadow-sm">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               {/* Education */}
-              <section>
-                <h2 className="text-xl font-bold mb-4 text-[var(--color-dark)] flex items-center gap-2">
-                  <GraduationCap className="w-5 h-5 text-gray-500" />
-                  Education
-                </h2>
-                <div className="text-gray-700 text-sm space-y-1">
-                  <p className="font-semibold">{member.education.split(",")[0]}</p>
-                  <p className="text-gray-500">{member.education.split(",")[1] || ""}</p>
-                </div>
-              </section>
+              {member.education && (
+                <section>
+                  <h2 className="text-xl font-bold mb-4 text-[var(--color-dark)] flex items-center gap-2">
+                    <GraduationCap className="w-5 h-5 text-gray-500" />
+                    Education
+                  </h2>
+                  <div className="text-gray-700 text-sm space-y-1">
+                    <p className="font-semibold">{member.education.split(",")[0]}</p>
+                    <p className="text-gray-500">{member.education.split(",")[1] || ""}</p>
+                  </div>
+                </section>
+              )}
             </div>
           </div>
         </div>
