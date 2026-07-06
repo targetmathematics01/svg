@@ -8,6 +8,7 @@ export default function Footer() {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <Image src="/favicon.png" alt="Aspira Youth Logo" width={36} height={36} className="object-contain" />
+            <div className="h-8 w-[2px] bg-white opacity-80 rounded-full"></div>
             <h3 className="text-2xl font-heading text-white m-0">
               Aspira<span className="text-[var(--color-secondary)]">Youth</span>
             </h3>

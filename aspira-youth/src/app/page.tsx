@@ -12,6 +12,7 @@ export default function Home() {
             <div className="w-full md:w-1/2 space-y-6">
               <h1 className="text-5xl md:text-6xl text-[var(--color-primary)] mb-4 flex items-center gap-4">
                 <Image src="/favicon.png" alt="Aspira Youth Logo" width={56} height={56} className="object-contain" />
+                <div className="h-10 md:h-12 w-1 bg-current rounded-full opacity-80"></div>
                 Aspira Youth
               </h1>
               <h2 className="text-3xl md:text-4xl text-[var(--color-dark)]">
