@@ -1,14 +1,20 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, LogOut, UserCircle } from "lucide-react";
+import { Heart, LogOut, UserCircle, Menu, X } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const { user, signInWithGoogle, logout, loading } = useAuth();
   const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   const isActive = (path: string) => {
     if (path === "/") return pathname === "/";
@@ -60,7 +66,29 @@ export default function Navbar() {
           </div>
 
         </div>
+        
+        {/* Mobile Menu Toggle Button */}
+        <button 
+          className="md:hidden p-2 text-gray-600 hover:text-gray-900 ml-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle Menu"
+        >
+          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-lg pb-4">
+          <nav className="flex flex-col py-4 px-6 gap-4 font-bold text-[var(--color-dark)] text-lg">
+            <Link href="/" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/") ? "text-[var(--color-primary)]" : ""}`}>Home</Link>
+            <Link href="/blog" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/blog") ? "text-[var(--color-primary)]" : ""}`}>Blog</Link>
+            <Link href="/activities" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/activities") ? "text-[var(--color-primary)]" : ""}`}>Activities</Link>
+            <Link href="/forum" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/forum") ? "text-[var(--color-primary)]" : ""}`}>Forum</Link>
+            <Link href="/team" className={`hover:text-[var(--color-primary)] transition-colors ${isActive("/team") ? "text-[var(--color-primary)]" : ""}`}>Our Team</Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
