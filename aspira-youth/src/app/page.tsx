@@ -203,11 +203,11 @@ export default function Home() {
             src="/savechildren.png" 
             alt="Supported by Save the Children" 
             fill 
-            className="object-cover object-center" 
+            className="object-cover object-center grayscale" 
             quality={100}
           />
           {/* Dark Overlay for Text Readability */}
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-black/60"></div>
         </div>
 
         {/* Content Overlay */}
